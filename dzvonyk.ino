@@ -13,7 +13,7 @@ Preferences preferences;   // Объект для работы с энергон
 void handleRoot() {
   // Если плата не подключена к роутеру (режим точки доступа) — показываем форму настройки
   if (WiFi.status() != WL_CONNECTED) {
-    server.send(200, "text/html", setup_html);
+    server.send(200, "text/html", getSetupPage());
     return;
   }
 
@@ -22,16 +22,12 @@ void handleRoot() {
   String ssid = WiFi.SSID();
   String rssi = String(WiFi.RSSI()); // Рівень сигналу
   
-  String html = FPSTR(index_html);
-  html.replace("%SSID%", ssid);
-  html.replace("%IP%", ip);
-  html.replace("%RSSI%", rssi);
+  String html = getIndexPage(ssid, ip, rssi);
     
   server.send(200, "text/html", html);
 }
 
 void handleSave() {
-  // Получаем данные из полей ввода на странице
   String ssid = server.arg("ssid");
   String pass = server.arg("pass");
 

@@ -1,6 +1,9 @@
 #ifndef SETUP_H
 #define SETUP_H
 
+#include "header.h"
+#include "footer.h"
+
 const char setup_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE html>
 <html>
@@ -21,5 +24,12 @@ const char setup_html[] PROGMEM = R"rawliteral(
 </body>
 </html>
 )rawliteral";
+
+inline String getSetupPage() {
+  String index_html = FPSTR(header_html);
+  index_html += FPSTR(setup_html);
+  index_html += FPSTR(footer_html);
+  return index_html;
+}
 
 #endif
